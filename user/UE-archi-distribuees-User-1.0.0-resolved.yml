@@ -35,6 +35,27 @@ paths:
                   type: string
                   example: <h1>Test</h1>
     /users:
+     post:
+          tags:
+          - admins
+          summary: add a user item
+          description: Adds a user to the system
+          operationId: post_user
+          requestBody:
+            description: Inventory item to add
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/UserItem'
+          responses:
+            "200":
+              description: Movie created
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/UserItem'
+            "409":
+              description: an existing item already exists
      get:
       tags:
       - developers
@@ -49,6 +70,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserID'
+                
+    /users/{user_id}:
+        get:
+          tags:
+          - developers
+          summary: get the user by its id
+          description: |
+            By passing in the appropriate options, you can get info of a User
+          operationId: get_user
+          parameters:
+          - name: user_id
+            in: path
+            description: User ID.
+            required: true
+            style: simple
+            explode: false
+            schema:
+              maximum: 1
+              minimum: 1
+              type: string
+          responses:
+            "200":
+              description: User description
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/UserItem'
+            "400":
+              description: bad input parameter
+        delete:
+            tags:
+            - admins
+            summary: delete a user item
+            description: delete a user to the system
+            operationId: delete_user
+            parameters:
+            - name: user_id
+              in: path
+              description: User ID.
+              required: true
+              style: simple
+              explode: false
+              schema:
+                maximum: 1
+                minimum: 1
+                type: string
+            responses:
+              "200":
+                description: item deleted
+              "400":
+                description: ID not found
+            
     /users/{userid}/bookings:
       get:
         tags:
