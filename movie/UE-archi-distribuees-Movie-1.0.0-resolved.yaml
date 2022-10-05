@@ -77,6 +77,35 @@ paths:
                 $ref: '#/components/schemas/MovieItem'
         "400":
           description: bad input parameter
+
+  /movies/director/{director}:
+    get:
+      tags:
+        - developers
+      summary: get the movie by its director
+      description: |
+        By passing in the appropriate options, you can get info of a Movie
+      operationId: get_movie_bydirector
+      parameters:
+        - name: director
+          in: path
+          description: Movie Director.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            maximum: 1
+            minimum: 1
+            type: string
+      responses:
+        "200":
+          description: Movie description
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieItem'
+        "400":
+          description: bad input parameter
     post:
       tags:
       - admins
