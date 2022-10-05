@@ -1,4 +1,4 @@
----
+
 openapi: 3.0.0
 info:
   title: Movie API
@@ -49,7 +49,64 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MovieID'
+                
   /movies/{movieid}:
+    delete:
+      tags:
+      - admins
+      summary: delete a movie item
+      description: Adds a movie to the system
+      operationId: del_movie
+      parameters:
+      - name: movieid
+        in: path
+        description: Movie ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      responses:
+        "200":
+          description: item deleted
+        "400":
+          description: ID not found
+          
+    post:
+      tags:
+      - admins
+      summary: add a movie item
+      description: Adds a movie to the system
+      operationId: create_movie
+      parameters:
+      - name: movieid
+        in: path
+        description: Movie ID.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      requestBody:
+        description: Inventory item to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovieItem'
+      responses:
+        "200":
+          description: Movie created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieItem'
+        "409":
+          description: an existing item already exists
+          
     get:
       tags:
       - developers
@@ -106,60 +163,7 @@ paths:
                 $ref: '#/components/schemas/MovieItem'
         "400":
           description: bad input parameter
-    post:
-      tags:
-      - admins
-      summary: add a movie item
-      description: Adds a movie to the system
-      operationId: create_movie
-      parameters:
-      - name: movieid
-        in: path
-        description: Movie ID.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          maximum: 1
-          minimum: 1
-          type: string
-      requestBody:
-        description: Inventory item to add
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MovieItem'
-      responses:
-        "200":
-          description: Movie created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MovieItem'
-        "409":
-          description: an existing item already exists
-    delete:
-      tags:
-      - admins
-      summary: delete a movie item
-      description: Adds a movie to the system
-      operationId: del_movie
-      parameters:
-      - name: movieid
-        in: path
-        description: Movie ID.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          maximum: 1
-          minimum: 1
-          type: string
-      responses:
-        "200":
-          description: item deleted
-        "400":
-          description: ID not found
+
   /titles:
     get:
       tags:
