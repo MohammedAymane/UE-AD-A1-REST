@@ -34,7 +34,22 @@ paths:
               schema:
                 type: string
                 example: <h1>Test</h1>
-  /users/{userid}:
+    /users:
+    get:
+      tags:
+      - developers
+      summary: get the full JSON database
+      description: |
+        Nothing to do
+      operationId: get_users
+      responses:
+        "200":
+          description: full JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserID'
+  /users/{userid}/bookings:
     get:
       tags:
         - developers
@@ -62,7 +77,7 @@ paths:
                 $ref: '#/components/schemas/BookingsUser'
         "400":
           description: bad input parameter
-    /users/{userid}/bookings/movies:
+    /users/{userid}/movies:
       get:
         tags:
           - developers
@@ -92,6 +107,25 @@ paths:
             description: bad input parameter
 components:
   schemas:
+      MovieID:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/UserItem'
+    UserItem:
+      required:
+      - name
+      - last_active
+      type: object
+      properties:
+        name:
+          type: string
+          example: chris_rivers
+        last_active:
+          type: int
+          example: 1360031010
     BookingsUser:
       required:
         - dates
