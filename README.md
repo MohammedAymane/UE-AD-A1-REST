@@ -91,7 +91,7 @@ UE-AD-A1-REST
 │   │   UE-archi-distribuees-User-1.0.0-resolved.yaml
 │   │
 │   └───database
-│       │   user.json
+│       │   users.json
 ```
 
 ## :checkered_flag: Starting ##
