@@ -18,24 +18,24 @@ tags:
 - name: developers
   description: Operations available to regular developers
 paths:
-  /:
-    get:
-      tags:
-      - developers
-      summary: home page of the service
-      description: |
-        Nothing to do
-      operationId: home
-      responses:
-        "200":
-          description: welcome message
-          content:
-            text/html:
-              schema:
-                type: string
-                example: <h1>Test</h1>
+    /:
+      get:
+        tags:
+        - developers
+        summary: home page of the service
+        description: |
+          Nothing to do
+        operationId: home
+        responses:
+          "200":
+            description: welcome message
+            content:
+              text/html:
+                schema:
+                  type: string
+                  example: <h1>Test</h1>
     /users:
-    get:
+     get:
       tags:
       - developers
       summary: get the full JSON database
@@ -49,42 +49,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserID'
-  /users/{userid}/bookings:
-    get:
-      tags:
-        - developers
-      summary: get bookings by user id
-      description: |
-        By passing in the appropriate options, you can get info of a user booking
-      operationId: get_booking_byuserid
-      parameters:
-        - name: userid
-          in: path
-          description: User ID.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            maximum: 1
-            minimum: 1
-            type: string
-      responses:
-        "200":
-          description: Booking description
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BookingsUser'
-        "400":
-          description: bad input parameter
-    /users/{userid}/movies:
+    /users/{userid}/bookings:
       get:
         tags:
           - developers
-        summary: get movies by user id
+        summary: get bookings by user id
         description: |
-          By passing in the appropriate options, you can get info of movies
-        operationId: get_movies_byuserid
+          By passing in the appropriate options, you can get info of a user booking
+        operationId: get_booking_byuserid
         parameters:
           - name: userid
             in: path
@@ -98,81 +70,109 @@ paths:
               type: string
         responses:
           "200":
-            description: movies description
+            description: Booking description
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Movies'
+                  $ref: '#/components/schemas/BookingsUser'
           "400":
             description: bad input parameter
+    /users/{userid}/movies:
+        get:
+          tags:
+            - developers
+          summary: get movies by user id
+          description: |
+            By passing in the appropriate options, you can get info of movies
+          operationId: get_movies_byuserid
+          parameters:
+            - name: userid
+              in: path
+              description: User ID.
+              required: true
+              style: simple
+              explode: false
+              schema:
+                maximum: 1
+                minimum: 1
+                type: string
+          responses:
+            "200":
+              description: movies description
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Movies'
+            "400":
+              description: bad input parameter
 components:
   schemas:
-      MovieID:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/UserItem'
-    UserItem:
-      required:
-      - name
-      - last_active
-      type: object
-      properties:
-        name:
-          type: string
-          example: chris_rivers
-        last_active:
-          type: int
-          example: 1360031010
-    BookingsUser:
-      required:
-        - dates
-        - userid
-      type: object
-      properties:
-        userid:
-          type: string
-          example: chris_rivers
-        dates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DateItem'
-    DateItem:
-      required:
-        - date
-        - movies
-      type: object
-      properties:
-        date:
-          type: string
-          example: "20151201"
-        movies:
-          type: array
-          items:
-            type: string
-            example: 276c79ec-a26a-40a6-b3d3-fb242a5947b6
-    Movies:
-      required:
+      UserID:
+        required:
         - id
-      type: array
-      properties:
-        id:
-          $ref: '#/components/schemas/MovieItem'
-    MovieItem:
-      required:
-        - director
-        - rating
-        - title
-      type: object
-      properties:
-        title:
-          type: string
-          example: The Martian
-        rating:
-          type: string
-          example: "7"
-        director:
-          type: string
-          example: Paul McGuigan
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/UserItem'
+      UserItem:
+        required:
+        - name
+        - last_active
+        type: object
+        properties:
+          name:
+            type: string
+            example: chris_rivers
+          last_active:
+            type: integer
+            example: 1360031010
+      BookingsUser:
+        required:
+          - dates
+          - userid
+        type: object
+        properties:
+          userid:
+            type: string
+            example: chris_rivers
+          dates:
+            type: array
+            items:
+              $ref: '#/components/schemas/DateItem'
+      DateItem:
+        required:
+          - date
+          - movies
+        type: object
+        properties:
+          date:
+            type: string
+            example: "20151201"
+          movies:
+            type: array
+            items:
+              type: string
+              example: 276c79ec-a26a-40a6-b3d3-fb242a5947b6
+      Movies:
+        required:
+          - id
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/MovieItem'
+      MovieItem:
+        required:
+          - director
+          - rating
+          - title
+        type: object
+        properties:
+          title:
+            type: string
+            example: The Martian
+          rating:
+            type: string
+            example: "7"
+          director:
+            type: string
+            example: Paul McGuigan
