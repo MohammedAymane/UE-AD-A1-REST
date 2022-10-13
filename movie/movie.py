@@ -21,6 +21,7 @@ def home():
 @app.route("/movies", methods=['GET'])
 def get_movies():
     return make_response(jsonify(movies),200)
+    # return make_response(jsonify([]),200)
 
 # get movie by id
 @app.route("/movies/<string:movie_id>", methods=['GET'])
@@ -79,6 +80,5 @@ def get_movies_by_director(director):
     
 
 if __name__ == "__main__":
-    #p = sys.argv[1]
     print("Server running in port %s"%(PORT))
     app.run(host=HOST, port=PORT)
